@@ -12,8 +12,8 @@ type Postgres struct {
 	db *sql.DB
 }
 
-func NewPostgresStorage(user, dbname, password string) (*Postgres, error) {
-	conn := fmt.Sprintf("user=%s dbname=%s password=%s sslmode=disable", user, dbname, password)
+func NewPostgresStorage(host, port, user, password, dbname string) (*Postgres, error) {
+	conn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 	db, err := sql.Open("postgres", conn)
 	if err != nil {
 		return nil, err
