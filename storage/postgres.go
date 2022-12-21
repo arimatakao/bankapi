@@ -29,6 +29,12 @@ func NewPostgresStorage(host, port, user, password, dbname string) (*Postgres, e
 }
 
 func (p *Postgres) Init() error {
+	if err := p.createAccountTable(); err != nil {
+		return err
+	}
+	if err := p.createTrasferHistoryTable(); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -46,4 +52,33 @@ func (p *Postgres) UpdateAccount(a *types.Account) error {
 
 func (p *Postgres) DeleteAccount(id string) error {
 	return nil
+}
+
+func (p *Postgres) createAccountTable() error {
+	q := `create table if not exists account (
+		id serial primary key,
+		login varchar(50),
+		password varchar(120),
+		card_number serial,
+		balance serial,
+		created_at timestamp
+		)`
+
+	return p.checkExecError(q)
+}
+
+func (p *Postgres) createTrasferHistoryTable() error {
+	q := `create table if not exists transfer_history (
+		id serial primary key,
+		from_card_Number serial,
+		to_card_Number serial,
+		message varchar(240),
+		date timestamp
+		)`
+	return p.checkExecError(q)
+}
+
+func (p *Postgres) checkExecError(query string) error {
+	_, err := p.db.Exec(query)
+	return err
 }
