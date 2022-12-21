@@ -11,12 +11,12 @@ type AccountReq struct {
 }
 
 type Account struct {
-	ID         string    `json:"ID"`
-	Login      string    `json:"login"`
-	Password   string    `json:"password"`
-	Balance    int       `json:"balance"`
-	CardNumber int       `json:"cardNumber"`
-	CreatedAt  time.Time `json:"createdAt"`
+	ID         string `json:"ID"`
+	Login      string `json:"login"`
+	Password   string `json:"password"`
+	Balance    int    `json:"balance"`
+	CardNumber int    `json:"cardNumber"`
+	CreatedAt  string `json:"createdAt"`
 }
 
 func NewAccount(login, password string) *Account {
@@ -25,6 +25,6 @@ func NewAccount(login, password string) *Account {
 		Password:   password,
 		Balance:    rand.Intn(1000),
 		CardNumber: rand.Intn(100000),
-		CreatedAt:  time.Now().UTC(),
+		CreatedAt:  time.Now().UTC().String(),
 	}
 }
