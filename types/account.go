@@ -2,7 +2,7 @@ package types
 
 import (
 	"math/rand"
-	"strconv"
+	"time"
 )
 
 type AccountReq struct {
@@ -11,21 +11,20 @@ type AccountReq struct {
 }
 
 type Account struct {
-	ID         string `json:"ID"`
-	Login      string `json:"login"`
-	Password   string `json:"password"`
-	Balance    int    `json:"balance"`
-	CardNumber int    `json:"cardNumber"`
-	CreatedAt  string `json:"createdAt"`
+	ID         string    `json:"ID"`
+	Login      string    `json:"login"`
+	Password   string    `json:"password"`
+	Balance    int       `json:"balance"`
+	CardNumber int       `json:"cardNumber"`
+	CreatedAt  time.Time `json:"createdAt"`
 }
 
 func NewAccount(login, password string) *Account {
 	return &Account{
-		ID:         strconv.Itoa(rand.Intn(100)),
 		Login:      login,
 		Password:   password,
 		Balance:    rand.Intn(1000),
 		CardNumber: rand.Intn(100000),
-		CreatedAt:  "2011",
+		CreatedAt:  time.Now().UTC(),
 	}
 }
