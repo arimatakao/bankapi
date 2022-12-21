@@ -10,12 +10,11 @@ import (
 func (s *APIServer) handleAccount(w http.ResponseWriter, r *http.Request) error {
 	switch r.Method {
 	case "GET":
-		s.handleGetAccount(w, r)
+		return s.handleGetAccount(w, r)
 	case "POST":
-		s.hanleCreateAccount(w, r)
+		return s.hanleCreateAccount(w, r)
 	case "DELETE":
-		s.handleDeleteAccount(w, r)
-
+		return s.handleDeleteAccount(w, r)
 	}
 	return fmt.Errorf("method not allowed %s", r.Method)
 }
