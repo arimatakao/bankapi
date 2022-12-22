@@ -15,8 +15,8 @@ type Account struct {
 	Login      string `json:"login"`
 	Password   string `json:"password"`
 	Balance    int    `json:"balance"`
-	CardNumber int    `json:"cardNumber"`
-	CreatedAt  string `json:"createdAt"`
+	CardNumber int    `json:"card_number"`
+	CreatedAt  string `json:"created_at"`
 }
 
 func NewAccount(login, password string) *Account {
@@ -25,6 +25,6 @@ func NewAccount(login, password string) *Account {
 		Password:   password,
 		Balance:    rand.Intn(1000),
 		CardNumber: rand.Intn(100000),
-		CreatedAt:  time.Now().UTC().String(),
+		CreatedAt:  time.Now().UTC().Format("_2/Jan/2006"),
 	}
 }
