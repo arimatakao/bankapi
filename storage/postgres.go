@@ -39,7 +39,6 @@ func (p *Postgres) Init() error {
 }
 
 func (p *Postgres) CreateAccount(a *types.Account) error {
-	// error type CreatedAt
 	q := fmt.Sprintf(`insert into account (login, password, card_number, balance, created_at)
 	values (
 		'%s', '%s', %v, %v, '%s'
@@ -57,7 +56,8 @@ func (p *Postgres) UpdateAccount(a *types.Account) error {
 }
 
 func (p *Postgres) DeleteAccount(id string) error {
-	return nil
+	q := fmt.Sprintf(`delete from account where id = %v`, id)
+	return p.checkExecError(q)
 }
 
 func (p *Postgres) createAccountTable() error {
