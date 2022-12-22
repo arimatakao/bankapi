@@ -63,11 +63,11 @@ func (p *Postgres) DeleteAccount(id string) error {
 func (p *Postgres) createAccountTable() error {
 	q := `create table if not exists account (
 		Id serial not null,
-		Login varchar(50),
-		Password varchar(120),
-		Card_number serial,
-		Balance serial,
-		Created_at date,
+		Login varchar(50) not null,
+		Password varchar(120) not null,
+		Card_number serial not null,
+		Balance serial not null,
+		Created_at date not null,
 		PRIMARY KEY(Id)
 		)`
 
@@ -76,11 +76,11 @@ func (p *Postgres) createAccountTable() error {
 
 func (p *Postgres) createTrasferHistoryTable() error {
 	q := `create table if not exists transfer_history (
-		Id int not null AUTOINCREMENT,
-		From_card_Number serial,
-		To_card_Number serial,
+		Id serial not null,
+		From_card_Number serial not null,
+		To_card_Number serial not null,
 		Message varchar(240),
-		Date date,
+		Date date not null,
 		PRIMARY KEY(Id)
 		)`
 	return p.checkExecError(q)
