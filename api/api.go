@@ -14,6 +14,11 @@ func WriteJSON(w http.ResponseWriter, status int, v any) error {
 	return json.NewEncoder(w).Encode(v)
 }
 
+func WriteStatusCode(w http.ResponseWriter, status int) error {
+	w.WriteHeader(status)
+	return nil
+}
+
 type apifunc func(w http.ResponseWriter, r *http.Request) error
 
 func makeHTTPHandleFunc(f apifunc) http.HandlerFunc {
