@@ -39,7 +39,13 @@ func (p *Postgres) Init() error {
 }
 
 func (p *Postgres) CreateAccount(a *types.Account) error {
-	return nil
+	// error type CreatedAt
+	q := fmt.Sprintf(`insert into account (login, password, card_number, balance, created_at)
+	values (
+		'%s', '%s', %v, %v, '%s'
+		)`,
+		a.Login, a.Password, a.CardNumber, a.Balance, a.CreatedAt)
+	return p.checkExecError(q)
 }
 
 func (p *Postgres) GetAcocuntByID(id string) (*types.Account, error) {
@@ -56,12 +62,13 @@ func (p *Postgres) DeleteAccount(id string) error {
 
 func (p *Postgres) createAccountTable() error {
 	q := `create table if not exists account (
-		id serial primary key,
-		login varchar(50),
-		password varchar(120),
-		card_number serial,
-		balance serial,
-		created_at timestamp
+		Id int not null AUTOINCREMENT,
+		Login varchar(50),
+		Password varchar(120),
+		Card_number serial,
+		Balance serial,
+		Created_at datetime,
+		PRIMARY KEY(Id)
 		)`
 
 	return p.checkExecError(q)
@@ -69,11 +76,12 @@ func (p *Postgres) createAccountTable() error {
 
 func (p *Postgres) createTrasferHistoryTable() error {
 	q := `create table if not exists transfer_history (
-		id serial primary key,
-		from_card_Number serial,
-		to_card_Number serial,
-		message varchar(240),
-		date timestamp
+		Id int not null AUTOINCREMENT,
+		From_card_Number serial,
+		To_card_Number serial,
+		Message varchar(240),
+		Date datetime,
+		PRIMARY KEY(Id)
 		)`
 	return p.checkExecError(q)
 }
